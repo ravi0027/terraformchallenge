@@ -47,7 +47,7 @@ resource "azurerm_key_vault_secret" "kv_secret" {
 
 resource "azurerm_monitor_diagnostic_setting" "logging" {
   name               = "logging"
-  target_resource_id = azurerm_key_vault_secret.kv_secret.id
+  target_resource_id = azurerm_key_vault_secret.azurerm_key_vault.id
   #storage_account_id = data.azurerm_storage_account.example.id
 
 
