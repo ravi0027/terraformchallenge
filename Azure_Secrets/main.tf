@@ -44,6 +44,30 @@ resource "azurerm_key_vault_secret" "kv_secret" {
   value        = var.secret_value
   key_vault_id = azurerm_key_vault.azurerm_key_vault.id
 }
+
+resource "azurerm_monitor_diagnostic_setting" "logging" {
+  name               = "logging"
+  target_resource_id = azurerm_key_vault_secret.kv_secret.id
+  #storage_account_id = data.azurerm_storage_account.example.id
+
+
+  log {
+    category = "AuditEvent"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = false
+    }
+  }
+}
 resource "azurerm_management_lock" "rglock" {
   name       = "resource-group-level"
   scope      = azurerm_resource_group.rg_name.id
