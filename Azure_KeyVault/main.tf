@@ -51,9 +51,16 @@ resource "azurerm_key_vault" "key_vault" {
   }
 }
 
+# resource "azurerm_management_lock" "rglock" {
+#   name       = "resource-group-level"
+#   scope      = azurerm_resource_group.rg_name.id
+#   lock_level = "ReadOnly"
+#   notes      = "This Resource Group is Read-Only"
+# }
+
 resource "azurerm_management_lock" "rglock" {
-  name       = "resource-group-level"
+  name       = "resource-level-lock"
   scope      = azurerm_resource_group.rg_name.id
-  lock_level = "ReadOnly"
-  notes      = "This Resource Group is Read-Only"
+  lock_level = "CanNotDelete"
+  notes      = "Locked because it's needed by a third-party"
 }
