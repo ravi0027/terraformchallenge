@@ -68,3 +68,10 @@ resource "azurerm_mysql_flexible_server" "mysql_flexserver" {
 
   depends_on = [azurerm_private_dns_zone_virtual_network_link.example]
 }
+
+resource "azurerm_management_lock" "rglock" {
+  name       = "resource-group-level"
+  scope      = azurerm_resource_group.rg_name.id
+  lock_level = "ReadOnly"
+  notes      = "This Resource Group is Read-Only"
+}

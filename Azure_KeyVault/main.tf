@@ -50,3 +50,10 @@ resource "azurerm_key_vault" "key_vault" {
     ]
   }
 }
+
+resource "azurerm_management_lock" "rglock" {
+  name       = "resource-group-level"
+  scope      = azurerm_resource_group.rg_name.id
+  lock_level = "ReadOnly"
+  notes      = "This Resource Group is Read-Only"
+}

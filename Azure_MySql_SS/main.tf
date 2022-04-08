@@ -47,3 +47,10 @@ resource "azurerm_mysql_database" "mysql_dbname" {
   charset             = "utf8"
   collation           = "utf8_unicode_ci"
 }
+
+resource "azurerm_management_lock" "rglock" {
+  name       = "resource-group-level"
+  scope      = azurerm_resource_group.rg_name.id
+  lock_level = "ReadOnly"
+  notes      = "This Resource Group is Read-Only"
+}

@@ -44,3 +44,9 @@ resource "azurerm_key_vault_secret" "kv_secret" {
   value        = var.secret_value
   key_vault_id = azurerm_key_vault.azurerm_key_vault.id
 }
+resource "azurerm_management_lock" "rglock" {
+  name       = "resource-group-level"
+  scope      = azurerm_resource_group.rg_name.id
+  lock_level = "ReadOnly"
+  notes      = "This Resource Group is Read-Only"
+}

@@ -58,3 +58,10 @@ resource "azurerm_mssql_database" "db_name" {
   }
 
 }
+
+resource "azurerm_management_lock" "rglock" {
+  name       = "resource-group-level"
+  scope      = azurerm_resource_group.rg_name.id
+  lock_level = "ReadOnly"
+  notes      = "This Resource Group is Read-Only"
+}
