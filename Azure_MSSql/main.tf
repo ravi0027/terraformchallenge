@@ -17,13 +17,6 @@ resource "azurerm_resource_group" "rg_name" {
   name     = var.rg_name
   location = var.rg_region
 
-resource "azurerm_management_lock" "kv_lock" {
-  name       = "resource-ip"
-  scope      = azurerm_key_vault.key_vault.id
-  lock_level = "CanNotDelete"
-  notes      = "Locked because it's needed by a third-party"
-}
-
 }
 resource "azurerm_storage_account" "storage_acc" {
   name                     = var.storageaccname
