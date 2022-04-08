@@ -51,16 +51,34 @@ resource "azurerm_key_vault" "key_vault" {
   }
 }
 
-# resource "azurerm_management_lock" "rglock" {
-#   name       = "resource-group-level"
-#   scope      = azurerm_resource_group.rg_name.id
-#   lock_level = "ReadOnly"
-#   notes      = "This Resource Group is Read-Only"
-# }
 
 resource "azurerm_management_lock" "rglock" {
   name       = "resource-level-lock"
   scope      = azurerm_resource_group.rg_name.id
   lock_level = "CanNotDelete"
   notes      = "Locked because it's needed by a third-party"
+}
+
+resource "azurerm_monitor_diagnostic_setting" "logging" {
+  name               = "logging"
+  target_resource_id = azurerm_key_vault.key_vault.id
+  #storage_account_id = data.azurerm_storage_account.example.id
+
+
+  log {
+    category = "AuditEvent"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = false
+    }
+  }
 }
