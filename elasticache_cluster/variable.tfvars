@@ -9,7 +9,6 @@ cluster_engine                  = "redis"
 cluster_node_type               = "cache.m4.large"
 engine_version                  = "3.2.10"
 port                            = "6379"
-security_group_name             = "security-group"
-elasticache_security_group_name = "elasticache-security-group"
+
 
 

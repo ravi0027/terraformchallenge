@@ -43,15 +43,7 @@ variable "port" {
   description = "name of the port in cluster"
   type        = number
 }
-variable "security_group_name" {
-  description = "name of the security group name"
-  type        = string
 
-}
-variable "elasticache_security_group_name" {
-  description = "name of the elasticache security group name"
-  type        = string
-}
 
 
 
