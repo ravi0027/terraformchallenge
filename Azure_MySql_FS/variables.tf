@@ -28,7 +28,7 @@ variable "subnet_name" {
 
 variable "private_dns_zone_name" {
   type    = string
-  default = "bootlabs.tech.com"
+  default = "bootlabs.com"
 }
 
 variable "mysqlflex_servername" {
@@ -60,3 +60,7 @@ variable "sku_name" {
   type    = string
 }
 
+variable "nsg_name" {
+  type = string
+  default = "test-nsg"
+}

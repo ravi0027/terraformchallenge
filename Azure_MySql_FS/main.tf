@@ -43,14 +43,38 @@ resource "azurerm_subnet" "subnet" {
   }
 }
 
+resource "azurerm_network_security_group" "nsg" {
+  name                = var.nsg_name
+  location            = azurerm_resource_group.rg_name.location
+  resource_group_name = azurerm_resource_group.rg_name.name
+
+  security_rule {
+    name                       = "test123"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+}
+
+resource "azurerm_subnet_network_security_group_association" "nsg_assn" {
+  subnet_id                 = azurerm_subnet.subnet.id
+  network_security_group_id = azurerm_network_security_group.nsg.id
+}
+
+
 resource "azurerm_private_dns_zone" "private_dns_zone" {
   name                = var.private_dns_zone_name
   resource_group_name = azurerm_resource_group.rg_name.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "example" {
-  name                  = "exampleVnetZone.com"
-  private_dns_zone_name = var.private_dns_zone_name
+  name                  = "bootlabs.com"
+  private_dns_zone_name = azurerm_private_dns_zone.private_dns_zone.name
   virtual_network_id    = azurerm_virtual_network.vnet_name.id
   resource_group_name   = azurerm_resource_group.rg_name.name
 }
@@ -69,9 +93,9 @@ resource "azurerm_mysql_flexible_server" "mysql_flexserver" {
   depends_on = [azurerm_private_dns_zone_virtual_network_link.example]
 }
 
-resource "azurerm_management_lock" "rglock" {
-  name       = "resource-group-level"
-  scope      = azurerm_resource_group.rg_name.id
-  lock_level = "ReadOnly"
-  notes      = "This Resource Group is Read-Only"
-}
+# resource "azurerm_management_lock" "rglock" {
+#   name       = "resource-group-level"
+#   scope      = azurerm_resource_group.rg_name.id
+#   lock_level = "ReadOnly"
+#   notes      = "This Resource Group is Read-Only"
+# }
