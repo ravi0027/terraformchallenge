@@ -1,9 +1,0 @@
-dns_hostnames = false
-dns_support = false
-nat_gateway = true
-instance_class = "db.t2.micro"
-db_memory_size = 1
-db_engine = "mysql"
-db_version = "5.7"
-user_name = "mg"
-db_password = "mg"
