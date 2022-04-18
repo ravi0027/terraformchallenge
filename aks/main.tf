@@ -3,7 +3,7 @@ resource "azurerm_resource_group" "main" {
   location = var.resource_group_location
 }
 
-resource "azurerm_kubernetes_cluster" "aks" {
+resource "azurerm_kubernetes_cluster" "az_aks" {
   name                            = var.name
   location                        = var.resource_group_name
   resource_group_name             = var.resource_group_location
@@ -24,14 +24,14 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
 resource "node_pool1" "example1" {
   name                  = "primary"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.az_aks.id
   vm_size               = var.node_pool1_vm_size
   node_count            = var.node_pool1_count
 }
 
 resource "node_pool2" "example2" {
   name                  = "secondary"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.az_aks.id
   vm_size               = var.node_pool1_vm_size
   node_count            = var.node_pool1_count
   priority              = "Spot"
