@@ -4,12 +4,12 @@ variable "region" {
 }
 
 variable "access_key" {
-    default = "AKIAVGSCK566353V6DBF"
+    default = ""
     description = "access key"
 }
 
 variable "secret_key" {
-    default = "nirkBRlkByWKBtWagfLHUZxdM7RwgmoUvwd4rJpJ"
+    default = ""
     description = "secret key"
 }
 
